@@ -1,6 +1,10 @@
 # House of Dogs
 
-A new Flutter project.
+Explore the world of adorable dogs with our Dog Image App! 
+Get greeted by a random dog image on the Home page, where you can fetch new images, 
+add them to your history for future reference, or even add them to your virtual cart with a custom price. 
+Dive into your image history to revisit your favorite doggy moments or manage your cart for a delightful browsing experience. 
+Start your journey into the world of furry companionship today!
 
 ## Getting Started
 

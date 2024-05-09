@@ -44,9 +44,13 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.network(
-              imageUrl,
-              fit: BoxFit.fill,
+            Container(
+              height: 500,
+              width: 400,
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit.fill,
+              ),
             ),
             const SizedBox(height: 20),
             Padding(
@@ -76,6 +80,8 @@ class _HomePageState extends State<HomePage> {
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.indigoAccent),
                         onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              content: Text("History added successfully")));
                           addToHistory(imageUrl);
                         },
                         child: const Text('Add to History',
@@ -100,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ) : const CircularProgressIndicator(),
+      ) : Center(child: CircularProgressIndicator()),
     );
   }
 }
