@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:house_of_dogs/Pages/bottom_nav.dart';
 import 'package:house_of_dogs/splash_screen.dart';
 import 'Pages/cart_page.dart';
 import 'Pages/history_page.dart';
@@ -19,10 +20,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => const SplashScreen(),
+        '/bottomNavBar': (context) => const BottomNavBar(),
         '/homepage': (context) => HomePage(),
         '/history': (context) => HistoryPage(),
-        '/cart': (context) => CartPage(),
+        '/cart': (context) => const CartPage(),
       },
     );
   }

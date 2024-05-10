@@ -40,7 +40,7 @@ class _CartPageState extends State<CartPage> {
                       return Padding(
                         padding: const EdgeInsets.all(10),
                         child: Container(
-                          color: Colors.black12,
+                          color: Colors.indigo.shade100,
                           child: Column(
                             children: [
                               Padding(
