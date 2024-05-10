@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> fetchImage() async {
     final response =
-    await http.get(Uri.parse('https://dog.ceo/api/breeds/image/random'));
+        await http.get(Uri.parse('https://dog.ceo/api/breeds/image/random'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
@@ -30,49 +31,69 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void addToHistory(String imageUrl) async {
+  Future addToHistory(String imageUrl) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> history = prefs.getStringList('history') ?? [];
     history.add(imageUrl);
     prefs.setStringList('history', history);
   }
 
+  Future addToCart(String imageUrl) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> cart = prefs.getStringList('cart') ?? [];
+    cart.add(imageUrl);
+    prefs.setStringList('cart', cart);
+  }
+
+  int dogPrice = 7500;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: imageUrl.isNotEmpty ? Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 500,
-              width: 400,
-              child: Image.network(
-                imageUrl,
-                fit: BoxFit.fill,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        elevation: 10,
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.indigoAccent),
-                    onPressed: () {
-                      fetchImage();
-                    },
-                    child:
-                    const Text('Get New Image', style: TextStyle(fontSize: 15)),
+      body: imageUrl.isNotEmpty
+          ? Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 500,
+                        child: Image.network(
+                          imageUrl,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Price:  $dogPrice",
+                            style: GoogleFonts.acme(fontSize: 30,color: Colors.indigoAccent),
+                          ),
+                          IconButton(
+                              onPressed: () {ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content:
+                                      Text("Your Dog is waiting in Cart")));
+                              addToCart(imageUrl);},
+                              icon: const Icon(
+                                Icons.add_shopping_cart,
+                                size: 35,
+                                color: Colors.indigoAccent,
+                              ))
+                        ],
+                      )
+                    ],
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -80,33 +101,39 @@ class _HomePageState extends State<HomePage> {
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.indigoAccent),
                         onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text("History added successfully")));
-                          addToHistory(imageUrl);
+                          fetchImage();
                         },
-                        child: const Text('Add to History',
+                        child: const Text('Get New Image',
                             style: TextStyle(fontSize: 15)),
                       ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 10,
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.indigoAccent),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/cart');
-                        },
-                        child:
-                        const Text('Go to Cart', style: TextStyle(fontSize: 15)),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 10,
+                                foregroundColor: Colors.white,
+                                backgroundColor: Colors.indigoAccent),
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: Colors.green,
+                                      content:
+                                          Text("History added successfully")));
+                              addToHistory(imageUrl);
+                            },
+                            child: const Text('Add to History',
+                                style: TextStyle(fontSize: 15)),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ) : Center(child: CircularProgressIndicator()),
+                ),
+              ],
+            )
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

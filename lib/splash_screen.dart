@@ -3,6 +3,7 @@ import 'package:house_of_dogs/Pages/home_page.dart';
 import 'package:lottie/lottie.dart';
 import 'Pages/cart_page.dart';
 import 'Pages/history_page.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -68,7 +69,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Center(child: Text("House of Dogs")),
+          title: Center(child: Text("House of Dogs", style: GoogleFonts.abhayaLibre(fontWeight: FontWeight.bold, fontSize: 30,color: Colors.white))),
           backgroundColor: Colors.indigoAccent,
         ),
         body: _pages[_selectedIndex],
