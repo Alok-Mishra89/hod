@@ -12,13 +12,24 @@ class SplashScreen extends StatelessWidget {
         backgroundColor: Colors.indigoAccent,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Padding(padding: EdgeInsets.all(10)),
+            const Padding(padding: EdgeInsets.all(5)),
             const Center(
               child: Text(
-                "Welcome to House of Dogs",
+                "Welcome to House",
                 style: TextStyle(
-                    fontSize: 35,
+
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            const Center(
+              child: Text(
+                "of Dogs",
+                style: TextStyle(
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
@@ -33,7 +44,7 @@ class SplashScreen extends StatelessWidget {
                 },
                 child: const Text(
                   "Let's Go",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500, color: Colors.black),
                 ))
           ],
         ),
